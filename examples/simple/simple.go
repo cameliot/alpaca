@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/mhannig/alpaca-go"
+	"github.com/cameliot/alpaca"
 )
 
 // Actions
