@@ -26,6 +26,13 @@ func decodeTimestampMs(t int64) time.Time {
 }
 
 /*
+Encode millisecond (UTC) timestamp
+*/
+func encodeTimestampMs(t time.Time) int64 {
+	return t.UTC().UnixNano() / 1000000
+}
+
+/*
 Decode int64 millisecond timestamp
 */
 func (payload PongPayload) Timestamp() time.Time {
@@ -69,8 +76,11 @@ func Ping(handle string) alpaca.Action {
 
 func Pong(handle string) alpaca.Action {
 	return alpaca.Action{
-		Type:    PONG,
-		Payload: handle,
+		Type: PONG,
+		Payload: PongPayload{
+			Handle:      handle,
+			TimestampMs: encodeTimestampMs(time.Now()),
+		},
 	}
 }
 
