@@ -24,7 +24,7 @@ func NewMetaSvc(
 			Name:        name,
 			Version:     version,
 			Description: description,
-			StartedAt:   time.Now().UTC().UnixNano() / 1000000,
+			StartedAtMs: time.Now().UTC().UnixNano() / 1000000,
 		},
 	}
 
@@ -32,7 +32,7 @@ func NewMetaSvc(
 }
 
 func (self *MetaSvc) Handle(actions alpaca.Actions, dispatch alpaca.Dispatch) {
-	log.Println("Started  _meta actions handling")
+	log.Println("Started meta actions handling")
 
 	for action := range actions {
 		switch action.Type {
