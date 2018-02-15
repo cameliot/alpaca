@@ -19,8 +19,8 @@ type PongPayload struct {
 Decode millisecond timestamp into time.Time
 */
 func decodeTimestampMs(t int64) time.Time {
-	sec := payload.TimestampMs / 1000
-	nsec := 1000000 * (payload.TimestampMs % 1000)
+	sec := t / 1000
+	nsec := 1000000 * (t % 1000)
 
 	return time.Unix(sec, nsec).UTC()
 }
@@ -67,9 +67,23 @@ func Ping(handle string) alpaca.Action {
 	}
 }
 
+func Pong(handle string) alpaca.Action {
+	return alpaca.Action{
+		Type:    PONG,
+		Payload: handle,
+	}
+}
+
 func Whois(handle string) alpaca.Action {
 	return alpaca.Action{
 		Type:    WHOIS,
 		Payload: handle,
+	}
+}
+
+func Iama(manifest IamaPayload) alpaca.Action {
+	return alpaca.Action{
+		Type:    IAMA,
+		Payload: manifest,
 	}
 }
