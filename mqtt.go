@@ -6,6 +6,7 @@ import (
 
 	"fmt"
 	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -17,6 +18,7 @@ type Dispatch func(Action) error
 type Routes map[string]string
 
 func randomId() string {
+	rand.Seed(time.Now().UnixNano())
 	return fmt.Sprintf("alpaca-%x", rand.Int63())
 }
 
@@ -154,6 +156,9 @@ func makeMessageHandler(actions Actions, routes Routes) mqtt.MessageHandler {
  and dispatch function.
 */
 func DialMqtt(brokerUri string, routes Routes) (Actions, Dispatch) {
+	mqtt.DEBUG = log.New(os.Stdout, "", 0)
+	mqtt.ERROR = log.New(os.Stdout, "", 0)
+
 	opts := mqtt.NewClientOptions()
 
 	// Basic configuration
