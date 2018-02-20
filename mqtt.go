@@ -156,7 +156,7 @@ func makeMessageHandler(actions Actions, routes Routes) mqtt.MessageHandler {
  and dispatch function.
 */
 func DialMqtt(brokerUri string, routes Routes) (Actions, Dispatch) {
-	mqtt.DEBUG = log.New(os.Stdout, "", 0)
+	// mqtt.DEBUG = log.New(os.Stdout, "", 0)
 	mqtt.ERROR = log.New(os.Stdout, "", 0)
 
 	opts := mqtt.NewClientOptions()
