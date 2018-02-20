@@ -2,6 +2,9 @@ package alpaca
 
 import (
 	"encoding/json"
+	"math/rand"
+
+	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -12,6 +15,10 @@ import (
 type Dispatch func(Action) error
 
 type Routes map[string]string
+
+func randomId() string {
+	return fmt.Sprintf("alpaca-%x", rand.Int63())
+}
 
 /*
  Decode an incoming mqtt message and create an
@@ -156,6 +163,7 @@ func DialMqtt(brokerUri string, routes Routes) (Actions, Dispatch) {
 	opts.SetMaxReconnectInterval(15.0 * time.Second)
 	opts.SetPingTimeout(1 * time.Second)
 	opts.SetKeepAlive(2 * time.Second)
+	opts.SetClientID(randomId())
 
 	return Connect(opts, routes)
 }
